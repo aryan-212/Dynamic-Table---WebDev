@@ -8,6 +8,10 @@ This is a simple web application for managing student details. It allows you to 
 
 
 
+https://github.com/aryan-212/Dynamic-Table---WebDev/assets/73695300/e9ad51e9-b05c-4243-a497-02769d92598f
+
+
+
 
 
 
