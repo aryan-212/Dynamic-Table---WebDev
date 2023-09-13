@@ -2,7 +2,7 @@
 
 This is a simple web application for managing student details. It allows you to add students by entering their names and SRN (Student Roll Number). You can also select and deselect students from the list, and the selected students will be displayed separately.
 
-[![Video](https://drive.google.com/file/d/1nJWtucMWgPFVPqyf9xIGPHx4pTTBmG6Z/view?usp=sharing)
+[Usage Video](https://drive.google.com/file/d/1nJWtucMWgPFVPqyf9xIGPHx4pTTBmG6Z/view?usp=sharing)
 
 
 ## Table of Contents
