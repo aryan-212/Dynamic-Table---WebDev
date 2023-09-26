@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://127.0.0.1:5500/Web%20Development/newhtm.html -->
+<html lang="en" dm-allow-colors="" dm-allow-transitions="">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #027562a9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #01271f;
+            text-shadow: 10px 50px 90px #002633b5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 60px;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+        }
+
+        button {
+            padding: 10px 70px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 1200px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 1em;
+            overflow: hidden;
+            box-shadow: 1px 1px 10px #00000014;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .selected-row {
+            background-color: #44ff3a3d;
+        }
+
+        #selectedList {
+            margin-top: 20px;
+        }
+
+        #selectedNames {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+    </style>
+    <style>
+        html {
+            filter: !important
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Student Details</h1>
+    <div class="container">
+        <form id="studentForm">
+            <pre>        <label for="name">Name:</label><input type="text" id="name" required="">
+                <label for="rollNumber">SRN No. :</label>
+<input type="text" id="rollNumber" required="">
+
+<button type="button" onclick="addStudent()">Add</button>
+            </pre>
+        </form>
+
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>SRN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Student details will be added here -->
+            </tbody>
+        </table>
+
+        <div id="selectedList">
+            <h2>Show selected:</h2>
+            <ol id="selectedNames">
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        var selectedNames = [];
+        var selectedSRNs = [];
+
+        function addStudent() {
+            var name = document.getElementById("name").value;
+            var rollNumber = document.getElementById("rollNumber").value;
+
+            var newRow = document.createElement("tr");
+            var nameCell = document.createElement("td");
+            var rollNumberCell = document.createElement("td");
+
+            nameCell.textContent = name;
+            rollNumberCell.textContent = rollNumber;
+
+            newRow.appendChild(nameCell);
+            newRow.appendChild(rollNumberCell);
+
+            document.getElementById("studentTable").getElementsByTagName('tbody')[0].appendChild(newRow);
+
+            nameCell.addEventListener("click", function () {
+                if (!selectedNames.includes(name)) {
+                    selectedNames.push(name);
+                    selectedSRNs.push(rollNumber); // Add SRN to the selected SRNs array
+                    newRow.classList.add("selected-row");
+                } else {
+                    var index = selectedNames.indexOf(name);
+                    if (index !== -1) {
+                        selectedNames.splice(index, 1);
+                        selectedSRNs.splice(index, 1);
+                        newRow.classList.remove("selected-row");
+                    }
+                }
+                showSelectedNames();
+            });
+
+            rollNumberCell.addEventListener("click", function () {
+                newRow.remove();
+                removeSelectedName(name);
+            });
+
+            document.getElementById("name").value = "";
+            document.getElementById("rollNumber").value = "";
+        }
+
+        function removeSelectedName(name) {
+            var selectedList = document.getElementById("selectedNames");
+            var items = selectedList.getElementsByTagName("li");
+
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].textContent.includes(name)) {
+                    items[i].remove();
+                    break;
+                }
+            }
+        }
+
+        function showSelectedNames() {
+            var selectedList = document.getElementById("selectedNames");
+            selectedList.innerHTML = "";
+
+            selectedNames.forEach(function (name, index) {
+                var listItem = document.createElement("li");
+                listItem.textContent = name + "      " + selectedSRNs[index];
+                selectedList.appendChild(listItem);
+            });
+        }
+
+        document.body.addEventListener("click", function (event) {
+            var target = event.target;
+            if (!target.matches("td")) {
+                selectedNames = [];
+                selectedSRNs = []; // Clear the selected SRNs array
+                showSelectedNames();
+                var tableRows = document.querySelectorAll("#studentTable tbody tr");
+                tableRows.forEach(function (row) {
+                    row.classList.remove("selected-row");
+                });
+            }
+        });
+    </script>
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
+    </script>
+
+
+</body>
+
+</html>
